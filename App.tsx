@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
-import { Router, Route, Switch } from './navigation';
-import IndexScreen from './screens/Index';
-import Error404 from './screens/404';
-import { StoreProvider as StringsStoreProvider } from './stores/stringsStore';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import MyTodos from './screens/MyTodos';
+
+import { client } from './graphql';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -34,17 +35,10 @@ export default function App() {
   }, []);
 
   return fontsLoaded ? (
-    <StringsStoreProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <IndexScreen />
-          </Route>
-          <Route>
-            <Error404 />
-          </Route>
-        </Switch>
-      </Router>
-    </StringsStoreProvider>
+    <ApolloProvider client={client}>
+      <SafeAreaProvider>
+        <MyTodos />
+      </SafeAreaProvider>
+    </ApolloProvider>
   ) : null;
 }
