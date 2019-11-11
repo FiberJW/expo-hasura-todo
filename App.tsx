@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import MyTodos from './screens/MyTodos';
 
+import MyTodos from './screens/MyTodos';
 import { client } from './graphql';
 
 export default function App() {

@@ -23,14 +23,14 @@ import {
   checkedBoxColor,
 } from '../styles/colors';
 import DeleteRow from '../components/DeleteRow';
-import { Subscriptions, Mutations } from '../graphql';
+import { subscriptions, mutations } from '../graphql';
 
 function Todo({ text: defaultText, completed: defaultCompleted, id }) {
   const [text, setText] = useState(defaultText);
   const [completed, setCompleted] = useState(defaultCompleted);
   const [showLoader, setShowLoader] = useState(false);
-  const [updateTodo] = useMutation(Mutations.UpdateTodo);
-  const [deleteTodo] = useMutation(Mutations.DeleteTodo);
+  const [updateTodo] = useMutation(mutations.UpdateTodo);
+  const [deleteTodo] = useMutation(mutations.DeleteTodo);
 
   return (
     <DeleteRow
@@ -99,14 +99,14 @@ export default function IndexScreen() {
   const todoDraftInputRef = useRef(null);
 
   const todosSubscriptionView = showCompletedTodos
-    ? Subscriptions.AllTodos
-    : Subscriptions.IncompleteTodos;
+    ? subscriptions.AllTodos
+    : subscriptions.IncompleteTodos;
 
   const { data: todosData, loading } = useSubscription(todosSubscriptionView, {
     variables: { userId: Constants.installationId },
   });
 
-  const [createTodo] = useMutation(Mutations.CreateTodo);
+  const [createTodo] = useMutation(mutations.CreateTodo);
 
   const todos: { completed: boolean; text: String; id: String }[] = todosData?.todos ?? [];
 
